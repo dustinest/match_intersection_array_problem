@@ -62,7 +62,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>src/main/solutions</source>
+								<source>solutions</source>
 							</sources>
 						</configuration>
 					</execution>

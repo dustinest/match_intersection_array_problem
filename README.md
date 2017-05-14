@@ -4,7 +4,7 @@ The problem was to find the fastest way to find intersaction in two arrays.
 
 ## The initial solution
 
-[The first solution](src/main/solutions/solution/SimpleStream.java)  was quite obvious:
+[The first solution](solutions/solution/SimpleStream.java)  was quite obvious:
 
 ```java
 public static List<String> findMatchingItems(List<String> a1, List<String> a2) {
