@@ -46,9 +46,18 @@ And the solutions I did were not fast enough. I knew there is more I can do.
 
 ## How to run this program.
 
+Just run arrayproblem.jar with list of test classes as arguments. If you want to run all my test cases:
+
 ```bash
 java -jar arrayproblem.jar solution.SimpleStream solution.StreamFindInHash solution.IterateAndFindInHash solution.FullCpuThreadsMethod solution.HalfCpuThreadsMethod solution.DoubleCpuThreadsMethod
 ```
+
+**NB** The first tests might take minutes to complete! So you might want to skip them. Or at least the simplestream:
+
+```bash
+java -jar arrayproblem.jar solution.StreamFindInHash solution.IterateAndFindInHash solution.FullCpuThreadsMethod solution.HalfCpuThreadsMethod solution.DoubleCpuThreadsMethod
+```
+
 
 Or your own class names. In your class there **must be** static function with **two arrays as arguments** and it **must return** a list of matching arrays.
 
