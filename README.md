@@ -37,7 +37,7 @@ Absurd as it is, but also I thought It would be cool to try to use parallel proc
 
 # I created a main test program
 
-This is actually fast enough for most cases. But I wanted to push further. So, I came up with the test case with 1 000 000 strings in each array. Each item is 100 characters long. See the code at [Main class](src/main/java/Main.java)
+To run and compare the use cases I came up with the test case with 1 000 000 strings in each array. Each item is 100 characters long. See the code at [Main class](src/main/java/Main.java)
 
 The program runs 20 times, each time running all the solutions and for each run it creates a new array. In the end it calculates average and median run time, also prints minimum and maximum run. The reason for this is to see the peaks if they happen. Also initial run is ignored because of the compiling issues.
 
