@@ -6,7 +6,7 @@ The problem was to find the fastest way to find intersaction in two arrays.
 
 [The first solution](src/main/solutions/solution/SimpleStream.java)  was quite obvious:
 
-```
+```java
 public static List<String> findMatchingItems(List<String> a1, List<String> a2) {
 	return a1.stream().filter(t -> a2.contains(t)).collect(Collectors.toList());
 }
@@ -18,7 +18,7 @@ The problem is that it is not fast enough. Because for each item in a1 programs 
 
 [The second solution](src\main\solutions\solution\StreamFindInHash.java) was still the stream, but I created HashSet out of the second array. As I was testing further I found streams a bit slower than generic iteration. So, [the third solution](src\main\solutions\solution\IterateAndFindInHash.java) I came up was:
 
-```
+```java
 public static List<String> findMatchingItems(List<String> v1, List<String> v2) {
 	HashSet<String> v3 = new HashSet<>(v2);
 	List<String> rv = new ArrayList<>();
@@ -47,7 +47,7 @@ Absurd as it is, but also I thought It would be cool to try to use parallel proc
 
 Build it. And run:
 
-```
+```bash
 java -jar arrayproblem.jar solution.StreamFindInHash solution.IterateAndFindInHash solution.FullCpuThreadsMethod
 ```
 
