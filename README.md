@@ -62,8 +62,8 @@ public static List<String> findMatchingItems(List<String> v1, List<String> v2)
 
 - Test runs 20 times;
 - Initial run time is printed but ignored;
-- Test class must have static method `public static List<String> findMatchingItems(List<String> v1, List<String> v2)`;
-- Test class may have a public static variable `public static final String DESCRIPTION = "This is my test";` otherwise class name is used at statistics;
+- Test class **must have** static method `public static List<String> findMatchingItems(List<String> v1, List<String> v2)`;
+- Test class **may have** a public static variable `public static final String DESCRIPTION = "This is my test";` otherwise class name is used at statistics;
 - Test only calculates the time of the function call, so remember, your function must block current thread until it is done;
 - After each run, except the first time, the second row shows current average running time;
 - At the end of 20 iterations maximum, minimum, average and median time of the running time of all methods is listed.
