@@ -8,7 +8,7 @@ The problem was to find the fastest way to find intersaction in two arrays.
 
 ```java
 public static List<String> findMatchingItems(List<String> a1, List<String> a2) {
-	return a1.stream().filter(t -> a2.contains(t)).collect(Collectors.toList());
+    return a1.stream().filter(t -> a2.contains(t)).collect(Collectors.toList());
 }
 ```
 
@@ -20,14 +20,14 @@ The problem is that it is not fast enough. Because for each item in a1 programs 
 
 ```java
 public static List<String> findMatchingItems(List<String> v1, List<String> v2) {
-	HashSet<String> v3 = new HashSet<>(v2);
-	List<String> rv = new ArrayList<>();
-	for (String s : v1) {
-		if (v3.remove(s)) {
-			rv.add(s);
-		}
-	}
-	return rv;
+    HashSet<String> v3 = new HashSet<>(v2);
+    List<String> rv = new ArrayList<>();
+    for (String s : v1) {
+        if (v3.remove(s)) {
+            rv.add(s);
+        }
+    }
+    return rv;
 }
 ```
 
