@@ -46,13 +46,11 @@ And the solutions I did were not fast enough. I knew there is more I can do.
 
 ## How to run this program.
 
-Build it. And run:
-
 ```bash
 java -jar arrayproblem.jar solution.StreamFindInHash solution.IterateAndFindInHash solution.FullCpuThreadsMethod
 ```
 
-Or your own class names. In your class there must have static function with thwo arrays as argument and must return a list of matching arrays.
+Or your own class names. In your class there **must be** static function with **two arrays as arguments** and it **must return** a list of matching arrays.
 
 ```
 public static List<String> findMatchingItems(List<String> v1, List<String> v2)
