@@ -1,6 +1,6 @@
 # The problem
 
-The problem was to find the fastest way to find intersaction in two arrays.
+The problem was to find the fastest way to find intersection in two arrays.
 
 ## The initial solution
 
