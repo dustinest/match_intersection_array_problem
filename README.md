@@ -33,7 +33,7 @@ public static List<String> findMatchingItems(List<String> v1, List<String> v2) {
 
 ## Multicore solutions
 
-Absurd as it is, but also I thought It would be cool to try to use parallel processing. I tried different versions, and the one which won the benchmark was [using all the CPU cores](src\main\solutions\solution\FullCpuThreadsMethod.java)
+Absurd as it is, but also I thought It would be cool to try to use parallel processing. I tried different versions, and the one which won the benchmark was [using all the CPU cores](src\main\solutions\solution\FullCpuThreadsMethod.java). If the arrays provided for each thread were too small or too large the program got slower. So, I used size as 1000 for each core. This means that the method creates 1000 threads with 1000 runnables.
 
 # I created a main test program
 
@@ -47,7 +47,7 @@ And the solutions I did were not fast enough. I knew there is more I can do.
 ## How to run this program.
 
 ```bash
-java -jar arrayproblem.jar solution.StreamFindInHash solution.IterateAndFindInHash solution.FullCpuThreadsMethod
+java -jar arrayproblem.jar solution.SimpleStream solution.StreamFindInHash solution.IterateAndFindInHash solution.FullCpuThreadsMethod solution.HalfCpuThreadsMethod solution.DoubleCpuThreadsMethod
 ```
 
 Or your own class names. In your class there **must be** static function with **two arrays as arguments** and it **must return** a list of matching arrays.
