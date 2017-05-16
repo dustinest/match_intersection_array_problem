@@ -16,7 +16,7 @@ The problem is that it is not fast enough. Because for each item in a1 programs 
 
 ## More like this
 
-[The second solution](solutions\solution\StreamFindInHash.java) was still the stream, but I created HashSet out of the second array. As I was testing further I found streams a bit slower than generic iteration. So, [the third solution](solutions\solution\IterateAndFindInHash.java) I came up was:
+[The second solution](solutions/solution/StreamFindInHash.java) was still the stream, but I created HashSet out of the second array. As I was testing further I found streams a bit slower than generic iteration. So, [the third solution](solutions/solution/IterateAndFindInHash.java) I came up was:
 
 ```java
 public static List<String> findMatchingItems(List<String> v1, List<String> v2) {
@@ -33,7 +33,7 @@ public static List<String> findMatchingItems(List<String> v1, List<String> v2) {
 
 ## Multicore solutions
 
-Absurd as it is, but also I thought It would be cool to try to use parallel processing. I tried different versions, and the one which won the benchmark was [using all the CPU cores](solutions\solution\FullCpuThreadsMethod.java). If the arrays provided for each thread were too small or too large the program got slower. So, I used size as 1000 for each core. This means that the method creates 1000 threads with 1000 runnables.
+Absurd as it is, but also I thought It would be cool to try to use parallel processing. I tried different versions, and the one which won the benchmark was [using all the CPU cores](solutions/solution/FullCpuThreadsMethod.java). If the arrays provided for each thread were too small or too large the program got slower. So, I used size as 1000 for each core. This means that the method creates 1000 threads with 1000 runnables.
 
 # I created a main test program
 
@@ -65,7 +65,7 @@ Or your own class names. In your class there **must be** static function with **
 public static List<String> findMatchingItems(List<String> v1, List<String> v2)
 ```
 
-The [HalfCpuThreadsMethod](solutions\solution\HalfCpuThreadsMethod.java) uses only half of CPUs available and [DoubleCpuThreadsMethod](solutions\solution\DoubleCpuThreadsMethod.java) uses twice of the amount. It is just to showcase the difference between CPUs used.
+The [HalfCpuThreadsMethod](solutions/solution/HalfCpuThreadsMethod.java) uses only half of CPUs available and [DoubleCpuThreadsMethod](solutions/solution/DoubleCpuThreadsMethod.java) uses twice of the amount. It is just to showcase the difference between CPUs used.
 
 ## The test notes:
 
