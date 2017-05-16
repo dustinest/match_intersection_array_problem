@@ -103,8 +103,7 @@ public class Main {
 		test(names, methods);
 	}
 
-	public static final DecimalFormat NUIMBER_FORMAT1 = new DecimalFormat("00.00");
-	public static final DecimalFormat NUIMBER_FORMAT2 = new DecimalFormat("00.00");
+	public static final DecimalFormat NUIMBER_FORMAT = new DecimalFormat("00.00");
 
 	public static void test(List<String> labels, List<BiFunction<List<String>, List<String>, List<String>>> calls) {
 		int iterations = 20;
@@ -123,7 +122,7 @@ public class Main {
 			GET_ARRAY_ROWS.accept(1000000, (a1, a2) -> {
 				doSearch(a1, a2, (index, value) -> {
 					System.out.print('\t');
-					System.out.print(NUIMBER_FORMAT1.format(value));
+					System.out.print(NUIMBER_FORMAT.format(value));
 					if (iteration > 0) {
 						mathAverages[index] += value;
 						values[index][iteration - 1] = value;
@@ -133,7 +132,7 @@ public class Main {
 				if (iteration > 0) {
 					for (double d : mathAverages) {
 						System.out.print('\t');
-						System.out.print(NUIMBER_FORMAT2.format(d / (iteration)));
+						System.out.print(NUIMBER_FORMAT.format(d / (iteration)));
 					}
 					System.out.println();
 				}
@@ -162,9 +161,9 @@ public class Main {
 		for (int i = 0; i < mathAverages.length; i++) {
 			System.out.println(labels.get(i));
 			System.out.println(
-					"\t" + "\tmax: " + NUIMBER_FORMAT2.format(maxes[i]) + "\tmin:" + NUIMBER_FORMAT2.format(mins[i])
-							+ "\tavg: " + NUIMBER_FORMAT2.format(mathAverages[i] / iterations) + "\tmedian:"
-							+ NUIMBER_FORMAT2.format(averages[i]));
+					"\t" + "\tmax: " + NUIMBER_FORMAT.format(maxes[i]) + "\tmin:" + NUIMBER_FORMAT.format(mins[i])
+							+ "\tavg: " + NUIMBER_FORMAT.format(mathAverages[i] / iterations) + "\tmedian:"
+							+ NUIMBER_FORMAT.format(averages[i]));
 		}
 	}
 
