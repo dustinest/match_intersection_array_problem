@@ -54,4 +54,8 @@ public class FullCpuThreadsMethod {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public static void shutDown() {
+		EXECUTOR_SERVICE.shutdownNow();
+	}
 }

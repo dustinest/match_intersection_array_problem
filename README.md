@@ -73,5 +73,6 @@ The [HalfCpuThreadsMethod](solutions/solution/HalfCpuThreadsMethod.java) uses on
 - Test only calculates the time of the function call, so remember, your function must block current thread until it is done;
 - After each run, except the first time, the second row shows current average running time;
 - At the end of 20 iterations maximum, minimum, average and median time of the running time of all methods is listed;
-- In Threaded tests (tests using CPUs) described below you have to exit the program manually after it is complete (ctrl + C) as I do not shut down the executor prgrammatically.
+- In Threaded tests (tests using CPUs) described below you have to exit the program manually after it is complete (ctrl + C) as I do not shut down the executor prgrammatically;
+- Optonal: in case tehre is something to clean up (shut down the ExecutorService `shutDown()` method can be implemented. See usage at [FullCpuThreadsMethod.java](solutions/solution/FullCpuThreadsMethod.java).
 

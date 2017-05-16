@@ -55,4 +55,8 @@ public class DoubleCpuThreadsMethod {
 			return null;
 		}
 	}
+
+	public static void shutDown() {
+		EXECUTOR_SERVICE.shutdownNow();
+	}
 }

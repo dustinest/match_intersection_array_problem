@@ -13,7 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -72,6 +74,7 @@ public class Main {
 	public static void main(String... args) throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 		List<String> names = new ArrayList<>();
 		List<BiFunction<List<String>, List<String>, List<String>>> methods = new ArrayList<>();
+		List<Runnable> shutDowns = new ArrayList<>();
 		Arrays.asList(args).stream().forEach(argument -> {
 			try {
 				Class<?> clazz = Thread.currentThread().getContextClassLoader().loadClass(argument);
@@ -79,21 +82,39 @@ public class Main {
 					Field field = clazz.getField("DESCRIPTION");
 					names.add(field.get(null).toString());
 				} catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
-					names.add(clazz.getName());
+					names.add(clazz.getSimpleName());
 				}
-				Method m = clazz.getMethod("findMatchingItems", List.class, List.class);
-				methods.add(new BiFunction<List<String>, List<String>, List<String>>() {
-					@SuppressWarnings("unchecked")
-					@Override
-					public List<String> apply(List<String> t, List<String> u) {
-						try {
-							return (List<String>) m.invoke(null, t, u);
-						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-							throw new RuntimeException(e);
+				try {
+					Method m = clazz.getMethod("findMatchingItems", List.class, List.class);
+					methods.add(new BiFunction<List<String>, List<String>, List<String>>() {
+						@SuppressWarnings("unchecked")
+						@Override
+						public List<String> apply(List<String> t, List<String> u) {
+							try {
+								return (List<String>) m.invoke(null, t, u);
+							} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+								throw new RuntimeException(e);
+							}
 						}
-					}
-				});
-			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+					});
+				} catch (NoSuchMethodException | SecurityException e) {
+					throw new RuntimeException(e);
+				}
+				try {
+					Method m = clazz.getMethod("shutDown");
+					shutDowns.add(new Runnable() {
+						@Override public void run() {
+							try {
+								m.invoke(null);
+							} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				} catch (NoSuchMethodException | SecurityException e) {
+					// ignore
+				}
+			} catch (ClassNotFoundException | SecurityException e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -101,13 +122,27 @@ public class Main {
 			throw new IllegalArgumentException("Arguments are required. With full path to class to run. For instance solution.FullCpuThreadsMethod");
 		}
 		test(names, methods);
+		for (Runnable r : shutDowns) {
+			r.run();
+		}
 	}
 
-	public static final DecimalFormat NUIMBER_FORMAT = new DecimalFormat("00.00");
+	private static final int LABEL_SIZE = 20;
+	private static final String LABEL_FORMAT = "\t%" + LABEL_SIZE + "s";
+	private static final String TOTALS_FORMAT = "%-" + LABEL_SIZE + "s\tmaximum: %3.2f\tminimum: %3.2f\taverage: %3.2f\tmedian: %3.2f";
+	private static final String ROW_FORMAT = "%7s\t";
 
+	private static Function<Double, String> FORMAT_NUMBER = new Function<Double, String>() {
+		private final DecimalFormat NUMBER_FORMAT = new DecimalFormat("00.00");
+		private static final String LABEL_FORMAT = "\t%" + LABEL_SIZE + "s";
+		@Override
+		public String apply(Double t) {
+			return String.format(LABEL_FORMAT, NUMBER_FORMAT.format(t));
+		}
+	};
+	
 	public static void test(List<String> labels, List<BiFunction<List<String>, List<String>, List<String>>> calls) {
 		int iterations = 20;
-
 		double[] mathAverages = new double[calls.size()];
 		Double[][] values = new Double[calls.size()][];
 
@@ -116,13 +151,19 @@ public class Main {
 			values[i] = new Double[iterations - 1];
 		});
 
+		labels = labels.stream().map(s -> s.length() > LABEL_SIZE ? s.substring(s.length() - LABEL_SIZE, s.length()) : s).collect(Collectors.toList());
+		System.out.print("       \t");
+		for (String label : labels) {
+			System.out.print(String.format(LABEL_FORMAT, label));
+		}
+		System.out.println();
+
 		IntStream.range(0, iterations).forEach(iteration -> {
 			System.gc();
-			System.out.print(iteration + ")");
+			System.out.print(String.format(ROW_FORMAT, iteration + 1));
 			GET_ARRAY_ROWS.accept(1000000, (a1, a2) -> {
 				doSearch(a1, a2, (index, value) -> {
-					System.out.print('\t');
-					System.out.print(NUIMBER_FORMAT.format(value));
+					System.out.print(FORMAT_NUMBER.apply(value));
 					if (iteration > 0) {
 						mathAverages[index] += value;
 						values[index][iteration - 1] = value;
@@ -130,9 +171,9 @@ public class Main {
 				}, calls);
 				System.out.println();
 				if (iteration > 0) {
+					System.out.print("Average\t");
 					for (double d : mathAverages) {
-						System.out.print('\t');
-						System.out.print(NUIMBER_FORMAT.format(d / (iteration)));
+						System.out.print(FORMAT_NUMBER.apply(d / iteration));
 					}
 					System.out.println();
 				}
@@ -159,11 +200,7 @@ public class Main {
 		}
 		System.out.println();
 		for (int i = 0; i < mathAverages.length; i++) {
-			System.out.println(labels.get(i));
-			System.out.println(
-					"\t" + "\tmax: " + NUIMBER_FORMAT.format(maxes[i]) + "\tmin:" + NUIMBER_FORMAT.format(mins[i])
-							+ "\tavg: " + NUIMBER_FORMAT.format(mathAverages[i] / iterations) + "\tmedian:"
-							+ NUIMBER_FORMAT.format(averages[i]));
+			System.out.println(String.format(TOTALS_FORMAT, labels.get(i),  maxes[i], mins[i], mathAverages[i] / iterations, averages[i]));
 		}
 	}
 
