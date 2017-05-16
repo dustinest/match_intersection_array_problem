@@ -41,9 +41,6 @@ To run and compare the use cases I came up with the test case with 1 000 000 str
 
 The program runs 20 times, each time running all the solutions and for each run it creates a new array. In the end it calculates average and median run time, also prints minimum and maximum run. The reason for this is to see the peaks if they happen. Also initial run is ignored because of the compiling issues.
 
-And the solutions I did were not fast enough. I knew there is more I can do.
-
-
 ## How to run this program.
 
 Just run arrayproblem.jar with list of test classes as arguments. If you want to run all my test cases:

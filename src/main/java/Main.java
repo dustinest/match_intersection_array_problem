@@ -20,7 +20,7 @@ public class Main {
 	/**
 	 * Create the array
 	 */
-	public static final BiConsumer<Integer, BiConsumer<String[], String[]>> getArrays = new BiConsumer<Integer, BiConsumer<String[], String[]>>() {
+	public static final BiConsumer<Integer, BiConsumer<String[], String[]>> GET_ARRAY_ROWS = new BiConsumer<Integer, BiConsumer<String[], String[]>>() {
 
 		private final Supplier<String> randomStringSupplier = new Supplier<String>() {
 			private final Random RANDOM = new Random();
@@ -120,7 +120,7 @@ public class Main {
 		IntStream.range(0, iterations).forEach(iteration -> {
 			System.gc();
 			System.out.print(iteration + ")");
-			getArrays.accept(1000000, (a1, a2) -> {
+			GET_ARRAY_ROWS.accept(1000000, (a1, a2) -> {
 				doSearch(a1, a2, (index, value) -> {
 					System.out.print('\t');
 					System.out.print(NUIMBER_FORMAT1.format(value));
@@ -207,20 +207,20 @@ public class Main {
 				rvI.addAndGet(u);
 			}
 		};
-		doMeasure(a1, a2, func, accept);
+		doRunTest(a1, a2, func, accept);
 		System.gc();
-		doMeasure(a2, a1, func, accept);
+		doRunTest(a2, a1, func, accept);
 		onDone.accept(rvL.doubleValue() / 2d, results[0]);
 	}
 
-	private static void doMeasure(String[] a1, String[] a2, BiFunction<List<String>, List<String>, List<String>> func,
+	private static void doRunTest(String[] a1, String[] a2, BiFunction<List<String>, List<String>, List<String>> func,
 			BiConsumer<Long, Integer> onDone) {
 		System.gc();
 		// String[][] arrays = CreateStringArray.getArrays();
-		doIt(Arrays.asList(a1), Arrays.asList(a2), func, onDone);
+		doMeasureLists(Arrays.asList(a1), Arrays.asList(a2), func, onDone);
 	}
 
-	private static void doIt(List<String> a1, List<String> a2,
+	private static void doMeasureLists(List<String> a1, List<String> a2,
 			BiFunction<List<String>, List<String>, List<String>> func, BiConsumer<Long, Integer> onDone) {
 		long current = System.currentTimeMillis();
 		List<String> result = func.apply(a1, a2);
